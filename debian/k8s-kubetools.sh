@@ -35,7 +35,7 @@ apt-mark hold kubelet kubeadm kubectl
 echo
 echo "Disabling swap..."
 swapoff -a
-sed -i 's/\/swap/#\/swap/' /etc/fstab
+sed -i '/ swap / s/^/#/' /etc/fstab
 echo "Check if swap is disabled after reboot..."
 echo "If not, please disable it manually by masking swap unit:"
 echo "systemctl mask <UNIT>"
