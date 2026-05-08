@@ -1,0 +1,29 @@
+networks:
+  postgres_net:
+    external: true
+
+services:
+  server:
+    image: docker.gitea.com/gitea:latest
+    container_name: gitea
+    restart: unless-stopped
+    environment:
+      - USER_UID=1003
+      - USER_GID=100
+      - TZ=${TZ:-UTC}
+      # Database
+      - GITEA__database__DB_TYPE=postgres
+      - GITEA__database__HOST=postgres:5432
+      - GITEA__database__NAME=gitea
+      - GITEA__database__USER=gitea
+      - GITEA__database__PASSWD=${GITEA_DB_PASSWORD}
+      - GITEA__server__SSH_PORT=2222
+    volumes:
+      - /volume1/docker/gitea/data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"   # Web UI
+      - "2222:22"     # Git SSH
+    networks:
+      - postgres_net
