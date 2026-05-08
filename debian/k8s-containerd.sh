@@ -66,7 +66,7 @@ echo
 echo "Install RUNC..."
 RUNC_VERSION=$(curl -s https://api.github.com/repos/opencontainers/runc/releases/latest | grep -Po '"tag_name": "\K.*?(?=")')
 wget https://github.com/opencontainers/runc/releases/download/${RUNC_VERSION}/runc.${ARCH}
-install -m 755 runc.arm64 /usr/local/sbin/runc
+install -m 755 runc.${ARCH} /usr/local/sbin/runc
 rm runc.${ARCH}
 
 # Set up systemd service for containerd
